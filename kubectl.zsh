@@ -46,7 +46,7 @@ function _zsh_kubectl_prompt_precmd() {
     fi
     zstyle ':zsh-kubectl-prompt:' updated_at "$now"
 
-    if ! context="$(kubectl config current-context 2>/dev/null)"; then
+    if ! context="$(kubectl config current-context 2>/dev/null | perl -pe s'/^.*_(\w+)$/$1/' )"; then
         ZSH_KUBECTL_PROMPT="current-context is not set"
         return 1
     fi
